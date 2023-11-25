@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify 
-import openai 
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
@@ -11,22 +11,23 @@ load_dotenv()
 # Get the value of the OPENAI_KEY variable
 openai_key = os.getenv("OPENAI_KEY")
 
-# Use the openai_key variable as needed
-openai.api_key = openai_key
+client = OpenAI(
+    # defaults to os.environ.get("OPENAI_API_KEY")
+    api_key=openai_key,
+)
 
 def get_completion(prompt): 
-	print(prompt) 
-	query = openai.Completion.create( 
-		engine="text-davinci-003", 
-		prompt=prompt, 
-		max_tokens=1024, 
-		n=1, 
-		stop=None, 
-		temperature=0.5, 
-	) 
-
-	response = query.choices[0].text 
-	return response 
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": prompt,
+            }
+        ],
+        model="gpt-3.5-turbo",
+    )
+	
+    return chat_completion.choices[0].message.content
 
 @app.route("/", methods=['POST', 'GET']) 
 def query_view(): 
