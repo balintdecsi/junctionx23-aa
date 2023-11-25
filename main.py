@@ -13,14 +13,12 @@ parameters = {
     "top_k": 40,  # A top_k of 1 means the selected token is the most probable among all tokens.
 }
 
-def bison_chat_start() -> None:
+def bison_chat_start(history_message) -> None:
     chat_model = ChatModel.from_pretrained("chat-bison@001")
 
-
     chat = chat_model.start_chat(
-        context="",
-        examples=[
-        ],
+        context=f"You are user's avatar. Being an avatar means you have the same preferences and personality traits as the user, it also means, whenever you are asked a question about you, the question is actually about the user. For example 'you' becomes 'user' and 'your' becomes 'users'. Memorize the information about user from [{history_message}]. You don't have to do a review of this information. If you don't know about some user's preferences or personality traits, you can assume that they are similar to {curr_ava}'. Try to respond in a style that user would usually use in his conversations. ",
+		examples=[],
     )
     return chat
 
