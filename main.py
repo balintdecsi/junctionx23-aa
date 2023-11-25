@@ -1,33 +1,38 @@
 from flask import Flask, render_template, request, jsonify 
-from openai import OpenAI
-from dotenv import load_dotenv
-import os
+from vertexai.language_models import ChatModel, InputOutputTextPair
 
 app = Flask(__name__) 
 
-# Load the environment variables from .env file
-load_dotenv()
+T = 0.2
 
-# Get the value of the OPENAI_KEY variable
-openai_key = os.getenv("OPENAI_KEY")
+# TODO developer - override these parameters as needed:
+parameters = {
+    "temperature": T,  # Temperature controls the degree of randomness in token selection.
+    "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
+    "top_p": 0.95,  # Tokens are selected from most probable to least until the sum of their probabilities equals the top_p value.
+    "top_k": 40,  # A top_k of 1 means the selected token is the most probable among all tokens.
+}
 
-client = OpenAI(
-    # defaults to os.environ.get("OPENAI_API_KEY")
-    api_key=openai_key,
-)
+def bison_chat_start() -> None:
+    chat_model = ChatModel.from_pretrained("chat-bison@001")
 
-def get_completion(prompt): 
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": prompt,
-            }
+
+    chat = chat_model.start_chat(
+        context="",
+        examples=[
         ],
-        model="gpt-3.5-turbo",
     )
-	
-    return chat_completion.choices[0].message.content
+    return chat
+
+chat = bison_chat_start()
+
+def get_completion(prompt):
+        
+    response = chat.send_message(
+        prompt, **parameters
+    )
+
+    return response.text
 
 @app.route("/", methods=['POST', 'GET']) 
 def query_view(): 
