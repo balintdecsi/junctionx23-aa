@@ -269,12 +269,12 @@ history_message = """
 
     In conclusion, my experience with JC Penney dress shirts has been overwhelmingly positive. These shirts have become my go-to choice for professional and semi-formal occasions. From style to comfort to durability, they have consistently met and even exceeded my expectations. I highly recommend JC Penney dress shirts to anyone seeking a reliable and stylish addition to their wardrobe.
 """
-current_ava = input("Type 0 if you want the chat to act as you, 1 if as Elon Mask and 2 if as ChatGPT ")
-asif = ["Mimic","Elon Musk","ChatGPT"]
-curr_ava = asif[int(current_ava)]
 
 
 if __name__ == "__main__":
+    current_ava = input("Type 0 if you want the chat to act as you, 1 if as Elon Mask and 2 if as ChatGPT ")
+    asif = ["Mimic","Elon Musk","ChatGPT"]
+    curr_ava = asif[int(current_ava)]
     while True:
         science_tutoring()
 # [END aiplatform_sdk_chat]

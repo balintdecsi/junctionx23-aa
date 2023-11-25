@@ -17,12 +17,14 @@ def bison_chat_start(history_message) -> None:
     chat_model = ChatModel.from_pretrained("chat-bison@001")
 
     chat = chat_model.start_chat(
-        context=f"You are user's avatar. Being an avatar means you have the same preferences and personality traits as the user, it also means, whenever you are asked a question about you, the question is actually about the user. For example 'you' becomes 'user' and 'your' becomes 'users'. Memorize the information about user from [{history_message}]. You don't have to do a review of this information. If you don't know about some user's preferences or personality traits, you can assume that they are similar to {curr_ava}'. Try to respond in a style that user would usually use in his conversations. ",
+        context=f"You are user's avatar. Being an avatar means you have the same preferences and personality traits as the user, it also means, whenever you are asked a question about you, the question is actually about the user. For example 'you' becomes 'user' and 'your' becomes 'users'. Memorize the information about user from [{history_message}]. You don't have to do a review of this information.",# If you don't know about some user's preferences or personality traits, you can assume that they are similar to {curr_ava}'. Try to respond in a style that user would usually use in his conversations. ",
 		examples=[],
     )
     return chat
 
-chat = bison_chat_start()
+with open('chat_history.txt', 'r') as f:
+    history_message = f.read()
+    chat = bison_chat_start(history_message)
 
 def get_completion(prompt):
         
@@ -35,14 +37,14 @@ def get_completion(prompt):
 @app.route("/", methods=['POST', 'GET']) 
 def query_view(): 
 	if request.method == 'POST': 
-		print('step1') 
+		print('step1')
 		prompt = request.form['prompt'] 
 		response = get_completion(prompt) 
 		print(response) 
 
 		return jsonify({'response': response}) 
-	return render_template('index.html') 
+	return render_template('index.html')
 
 
 if __name__ == "__main__": 
-	app.run(debug=True) 
+	app.run(debug=True)
