@@ -25,7 +25,7 @@ parameters = {
     "top_k": 40,  # A top_k of 1 means the selected token is the most probable among all tokens.
 }
 
-def bison_chat_start(examples, message_history) -> None:
+def bison_chat_start(examples, message_history):
     chat_model = ChatModel.from_pretrained("chat-bison@001")
 
     chat = chat_model.start_chat(
@@ -36,9 +36,10 @@ def bison_chat_start(examples, message_history) -> None:
 
 def get_completion(chat, prompt):
     
+    message_prompt = "My answer to your question is as follows: '" + prompt + "'. React to that and also ask me about a new random topic."
     response = chat.send_message(
-        "My answer to your question is as follows: '" + prompt + "'. React to that and also ask me about a new random topic.",
-        **parameters
+        message_prompt,
+        **parameters,
     )
 
     return response.text
