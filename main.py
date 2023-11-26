@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify 
-from vertexai.language_models import ChatModel, ChatMessage, InputOutputTextPair
+from vertexai.language_models import ChatModel, InputOutputTextPair
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -12,10 +12,7 @@ T = 0.2
 # global current_output_text
 
 message_history = [
-    ChatMessage(
-        content="Hi, I'm your digital self! TellYou made me from your data. Let us get to know better! Can you please introduce yourself, including your age, sex and hometown? Thanks!",
-        author="B"
-    ),
+    "You: Hi, I'm your digital self! TellYou made me from your data. Let us get to know better! Can you please introduce yourself, including your age, sex and hometown? Thanks!",
 ]
 examples = []
 current_input_text = ["Can you please introduce yourself, including your age, sex and hometown?", "debugging"]
@@ -32,9 +29,8 @@ def bison_chat_start(examples, message_history) -> None:
     chat_model = ChatModel.from_pretrained("chat-bison@001")
 
     chat = chat_model.start_chat(
-        context="",
+        context="You are a chatbot with the following chat history:\n" + "\n".join(message_history) + "\n",
 		examples=examples,
-        message_history=message_history,
     )
     return chat
 
@@ -42,7 +38,7 @@ def get_completion(chat, prompt):
     
     response = chat.send_message(
         "My answer to your question is as follows: '" + prompt + "'. React to that and also ask me about a new random topic.",
-        **parameters,
+        **parameters
     )
 
     return response.text
@@ -53,7 +49,7 @@ def home():
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
-    message_history.append(ChatMessage(content=userText, author="U"))
+    message_history.append("User: " + userText)
     current_example = InputOutputTextPair(
         input_text=current_input_text[0],
         output_text=userText,
@@ -61,7 +57,7 @@ def get_bot_response():
     examples.append(current_example)
     chat = bison_chat_start(examples, message_history)
     bot_response = get_completion(chat, userText)
-    message_history.append(ChatMessage(content=bot_response, author="B"))
+    message_history.append("Bot: " + bot_response)
     current_input_text[0] = bot_response.split(".")[-1]
     return bot_response
 
