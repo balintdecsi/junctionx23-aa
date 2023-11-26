@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify 
 from vertexai.language_models import ChatModel, InputOutputTextPair
 
-app = Flask(__name__) 
+app = Flask(__name__)
+app.static_folder = 'static'
 
 T = 0.2
 
@@ -34,17 +35,14 @@ def get_completion(prompt):
 
     return response.text
 
-@app.route("/", methods=['POST', 'GET']) 
-def query_view(): 
-	if request.method == 'POST': 
-		print('step1')
-		prompt = request.form['prompt'] 
-		response = get_completion(prompt) 
-		print(response) 
-
-		return jsonify({'response': response}) 
-	return render_template('index.html')
+@app.route("/")
+def home():
+    return render_template("index.html")
+@app.route("/get")
+def get_bot_response():
+    userText = request.args.get('msg')
+    return get_completion(userText)
 
 
 if __name__ == "__main__": 
-	app.run(debug=True)
+	app.run() 
