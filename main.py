@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify 
 from vertexai.language_models import ChatModel, InputOutputTextPair
 
-app = Flask(__name__) 
+app = Flask(__name__)
+app.static_folder = 'static'
 
 T = 0.2
 
@@ -44,4 +45,4 @@ def get_bot_response():
 
 
 if __name__ == "__main__": 
-	app.run(debug=True) 
+	app.run() 
