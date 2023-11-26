@@ -43,4 +43,4 @@ gcloud app deploy
 Just open our [demo site](https://metal-node-406211.lm.r.appspot.com/): 
 
 The best way to get familiar with our product is to watch our submission video:
-[TELLYOU submission]()
+[TELLYOU submission](https://www.youtube.com/watch?v=ml1NTOlKZxg)
