@@ -1,8 +1,8 @@
 :root {
-    --body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    --msger-bg: #fff;
+    body-bg: #ffffff;
+    msger-bg: #ffffff;
     --border: 2px solid #ddd;
-    --left-msg-bg: #ececec;
+    --left-msg-bg: #ffffff;
     --right-msg-bg: #579ffb;
   }
   
@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: var(--body-bg);
+    background-color: var(--body-bg);
     font-family: Helvetica, sans-serif;
   }
   
@@ -33,7 +33,8 @@
     justify-content: space-between;
     width: 100%;
     max-width: 867px;
-    margin: 25px 10px;
+    margin-left: auto;
+    margin-right: auto;
     height: calc(100% - 50px);
     border: var(--border);
     border-radius: 5px;
@@ -93,10 +94,12 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    color:#C83C9A;
   }
   .msg-info-name {
     margin-right: 10px;
     font-weight: bold;
+    color:#C83C9A;
   }
   .msg-info-time {
     font-size: 0.85em;
@@ -117,7 +120,11 @@
   .right-msg .msg-img {
     margin: 0 0 0 10px;
   }
-  
+   .msg-info-text {
+    margin-right: 10px;
+    font-weight: bold;
+    color:#C83C9A;
+  }
   .msger-inputarea {
     display: flex;
     padding: 10px;
@@ -136,14 +143,16 @@
   }
   .msger-send-btn {
     margin-left: 10px;
-    background: rgb(0, 196, 65);
-    color: #fff;
+    background-color: #A5F0F3;
+    border: none;
+    color: white;
     font-weight: bold;
+    border-radius: 12px;
     cursor: pointer;
     transition: background 0.23s;
   }
   .msger-send-btn:hover {
-    background: rgb(0, 180, 50);
+    background: #A64E4EA;
   }
   
   .msger-chat {
