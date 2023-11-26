@@ -2,8 +2,8 @@
     body-bg: #ffffff;
     msger-bg: #ffffff;
     --border: 2px solid #ddd;
-    --left-msg-bg: #ffffff;
-    --right-msg-bg: #579ffb;
+    left-msg-bg: #A5F0F3;
+    --right-msg-bg: #C83C9A;
   }
   
   html {
@@ -49,8 +49,8 @@
     padding: 10px;
     text-align: center;
     border-bottom: var(--border);
-    background: #eee;
-    color: #666;
+    background: #DAF8FA;
+    color: #C83C9A;
   }
   
   .msger-chat {
@@ -129,13 +129,14 @@
     display: flex;
     padding: 10px;
     border-top: var(--border);
-    background: #eee;
+    background: #ffffff;
   }
   .msger-inputarea * {
     padding: 10px;
     border: none;
-    border-radius: 3px;
+    border-radius: 20px;
     font-size: 1em;
+    background: #DAF8FA;
   }
   .msger-input {
     flex: 1;
@@ -147,7 +148,7 @@
     border: none;
     color: white;
     font-weight: bold;
-    border-radius: 12px;
+    border-radius: 50%;
     cursor: pointer;
     transition: background 0.23s;
   }
